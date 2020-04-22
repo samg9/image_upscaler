@@ -1,6 +1,7 @@
 from flask import Flask, request, Response, make_response, jsonify, redirect, url_for, session
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
+from esrgan.esrgan import esrgan_load_generate
 import json
 import os
 
@@ -25,6 +26,7 @@ def fileUpload():
         destination="/".join([target, filename])
         file.save(destination)
         session['uploadFilePath']=destination
+        esrgan_load_generate(destination, filename)
         return "successfully Uploaded", 202
     except Exception as e:
         print("error: ",e)
