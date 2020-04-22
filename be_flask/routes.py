@@ -1,8 +1,5 @@
-from flask import Flask, request, Response, jsonify
-from flask import Flask, request, Response, jsonify, redirect, url_for, session
+from flask import Flask, request, Response, make_response, jsonify, redirect, url_for, session
 from flask_cors import CORS, cross_origin
-from flask import Flask, make_response
-from scraper.scraper import get_profile, scrape
 from werkzeug.utils import secure_filename
 import json
 import os
