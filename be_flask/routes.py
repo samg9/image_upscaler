@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = '/Users/samurai/code/couleur/be_flask/'
+UPLOAD_FOLDER = '/Users/samurai/Documents/image_upscaler/be_flask/'
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
