@@ -26,7 +26,7 @@ def fileUpload():
         destination="/".join([target, filename])
         file.save(destination)
         session['uploadFilePath']=destination
-        esrgan_load_generate(destination)
+        esrgan_load_generate(destination, filename)
         return "successfully Uploaded", 202
     except Exception as e:
         print("error: ",e)

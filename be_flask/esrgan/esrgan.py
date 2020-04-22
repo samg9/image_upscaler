@@ -3,7 +3,7 @@ from .architecture.architecture import *
 import cv2
 import numpy as np
 
-def esrgan_load_generate(path_to_image):
+def esrgan_load_generate(path_to_image, filename):
     upscale = 4
 
     device = torch.device('cpu')
@@ -26,5 +26,5 @@ def esrgan_load_generate(path_to_image):
     output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
     output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
     output = (output * 255.0).round()
-    path = 'test_docs/result1_rlt.png'#.format(base) #should set write path with static global
+    path = 'test_docs/' + filename + '_upscaled'+ '.png'#.format(base) #should set write path with static global
     cv2.imwrite(path, output)
