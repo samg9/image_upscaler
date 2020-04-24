@@ -4,6 +4,11 @@ from werkzeug.utils import secure_filename
 from esrgan.esrgan import esrgan_load_generate
 import json
 import os
+import base64
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+import io 
 
 app = Flask(__name__)
 
@@ -26,8 +31,27 @@ def fileUpload():
         destination="/".join([target, filename])
         file.save(destination)
         session['uploadFilePath']=destination
-        esrgan_load_generate(destination, filename)
-        return "successfully Uploaded", 202
+        original,output =esrgan_load_generate(destination, filename)
+        images = {
+            'Original': original,
+            'SRGAN': output,
+        }
+        print("type of original: ", type(original))
+        print("type of output: ",type(output))
+        # l = "orginal:::::::::, {}".format(base64.b64encode(original))
+        # ll = "outoput:::::::::, {}".format(base64.b64encode(output))
+        # print("l and ll" , l, " : ", ll)
+        # Plot the images. Note: rescaling and using squeeze since we are getting batches of size 1
+        fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+        for i, (title, img) in enumerate(images.items()):
+            axes[i].imshow(img)
+            axes[i].set_title("{} - {}".format(title, img.shape))
+            axes[i].axis('off')
+
+        i = io.BytesIO()
+        plt.savefig(i, format='png', bbox_inches='tight')
+        encode64 = base64.b64encode(i.getvalue())
+        return "data:image/png;base64, {}".format(encode64.decode('utf-8'))
     except Exception as e:
         print("error: ",e)
         return "Unable to upload", 404

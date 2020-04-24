@@ -18,13 +18,16 @@ def esrgan_load_generate(path_to_image, filename):
     model = model.to(device)
 
     img = cv2.imread(path_to_image, cv2.IMREAD_COLOR)
+    orig= img
     img = img * 1.0 / 255
     img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
+    
     img_LR = img.unsqueeze(0)
     img_LR = img_LR.to(device)
-
+    print("running thru model:")
     output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
     output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
     output = (output * 255.0).round()
     path = 'test_docs/' + filename + '_upscaled'+ '.png'#.format(base) #should set write path with static global
     cv2.imwrite(path, output)
+    return orig,output
