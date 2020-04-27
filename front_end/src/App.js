@@ -60,8 +60,15 @@ class App extends Component {
         <div className="column">
           {this.state.imageBefore == null ? "" : <img width="100%" height="calc(100% - 10px)" src={this.state.imageBefore} alt="before" />}
         </div>
-        {this.state.imgAfter == null ? "" : <img width="100" height="calc(100% - 10px)" src={this.state.imgAfter} alt="after" />}
-
+        {this.state.imgAfter == null ? "" :
+          <div>
+            <br />
+            <a href={this.state.imgAfter} download>
+              <h5>Click on image to download</h5>
+              <img width="100%" height="calc(100% - 10px)" src={this.state.imgAfter} alt="after" />
+            </a>
+          </div>
+        }
       </div>
     );
   }
