@@ -24,10 +24,11 @@ def esrgan_load_generate(path_to_image, filename):
     
     img_LR = img.unsqueeze(0)
     img_LR = img_LR.to(device)
-    print("running thru model:")
     output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
     output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
     output = (output * 255.0).round()
-    path = 'test_docs/' + filename + '_upscaled'+ '.png'#.format(base) #should set write path with static global
+    path = 'test_docs/' + filename.replace(".jpg","") + '_upscaled'+ '.png'#.format(base) #should set write path with static global
     cv2.imwrite(path, output)
+    orig = np.ascontiguousarray(orig)
+    output = np.ascontiguousarray(output)
     return orig,output
