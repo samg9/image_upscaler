@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import FileDropper from './components/FileDropper/FileDropper.js';
 import axios from 'axios';
-import { MetroSpinner } from "react-spinners-kit";
+import { FlapperSpinner } from "react-spinners-kit";
 
 const initialState = {
   selectedFile: null,
+  imageBefore: null,
   loaded: 0,
   loading: false,
-  img: null,
+  imgAfter: null,
 }
 
 class App extends Component {
@@ -20,25 +21,31 @@ class App extends Component {
   onChangeHandler = event => {
     this.setState({
       selectedFile: event.target.files[0],
+      imageBefore: URL.createObjectURL(event.target.files[0]),
       loaded: 0,
     })
   }
+
   onClickHandler = () => {
-    this.setState({
-      loading: true,
-    });
-    const data = new FormData()
-    data.append('file', this.state.selectedFile)
-    axios.post("http://localhost:5000/api/upload", data, { // receive two parameter endpoint url ,form data 
-    }).then(res => { // then print response status
+    if (this.state.imageBefore != null) {
       this.setState({
-        loading: false,
-        img: res.data
+        loading: true,
       });
-      console.log(this.state.img);
-      console.log(res);
-      console.log(res.statusText);
-    })
+      const data = new FormData()
+      data.append('file', this.state.selectedFile)
+      axios.post("http://localhost:5000/api/upload", data, { // receive two parameter endpoint url ,form data 
+      }).then(res => { // then print response status
+        this.setState({
+          loading: false,
+          imgAfter: res.data
+        });
+      }).catch(e => {
+        this.setState({
+          loading: false,
+        })
+        console.log(e);
+      })
+    }
   }
 
   render() {
@@ -46,12 +53,14 @@ class App extends Component {
       <div className="App">
         <FileDropper onChangeHandler={this.onChangeHandler} onClickHandler={this.onClickHandler} />
         <div id="inner">
-          <MetroSpinner
-            size={150}
+          <FlapperSpinner
             loading={this.state.loading}
           />
-          <img src={this.state.img} alt="" />
         </div>
+        <div className="column">
+          {this.state.imageBefore == null ? "" : <img width="100%" height="calc(100% - 10px)" src={this.state.imageBefore} alt="before" />}
+        </div>
+        {this.state.imgAfter == null ? "" : <img width="100" height="calc(100% - 10px)" src={this.state.imgAfter} alt="after" />}
 
       </div>
     );
