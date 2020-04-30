@@ -58,14 +58,13 @@ class App extends Component {
           />
         </div>
         <div className="column">
-          {this.state.imageBefore == null ? "" : <img width="100%" height="calc(100% - 10px)" src={this.state.imageBefore} alt="before" />}
+          {this.state.imageBefore == null ? "" : <img width="90%" src={this.state.imageBefore} alt="before" />}
         </div>
         {this.state.imgAfter == null ? "" :
-          <div>
-            <br />
+          <div className="column">
             <a href={this.state.imgAfter} download>
-              <h5>Click on image to download</h5>
-              <img width="100%" height="calc(100% - 10px)" src={this.state.imgAfter} alt="after" />
+              Click on image to download
+              <img width="90%" src={this.state.imgAfter} alt="after" />
             </a>
           </div>
         }
