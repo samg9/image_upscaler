@@ -47,7 +47,9 @@
 }
 
 .column {
-  float: left;
-  width: 50%;
+  align-items: center;
+  justify-content: center;
+  display:flex ;
   padding: 5px;
+  height: 50%; 
 }
