@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import FileDropper from './components/FileDropper/FileDropper.js';
 import axios from 'axios';
-import { FlapperSpinner } from "react-spinners-kit";
+import { ClapSpinner } from "react-spinners-kit";
 
 const initialState = {
   selectedFile: null,
@@ -21,9 +21,14 @@ class App extends Component {
   onChangeHandler = event => {
     this.setState({
       selectedFile: event.target.files[0],
-      imageBefore: URL.createObjectURL(event.target.files[0]),
       loaded: 0,
     })
+    if (event.target.files[0] != null) {
+      this.setState({
+        imageBefore: URL.createObjectURL(event.target.files[0]),
+      })
+    }
+
   }
 
   onClickHandler = () => {
@@ -53,8 +58,9 @@ class App extends Component {
       <div className="App">
         <FileDropper onChangeHandler={this.onChangeHandler} onClickHandler={this.onClickHandler} />
         <div id="inner">
-          <FlapperSpinner
+          <ClapSpinner
             loading={this.state.loading}
+            size={50}
           />
         </div>
         <div className="column">

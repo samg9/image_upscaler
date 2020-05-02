@@ -7,7 +7,7 @@ const FileDropper = ({ onChangeHandler, onClickHandler }) => {
             <div className="row">
                 <div className="offset-md-3 col-md-6">
                     <div className="form-group files">
-                        <label><b>Upload Your File to be Upscaled</b></label>
+                        <label><b>Upload Your File to be Upscaled (with <a href="https://github.com/xinntao/ESRGAN">ESRGAN</a>)</b></label>
                         <input type="file" className="form-control" multiple onChange={onChangeHandler} />
                     </div>
                     <div className="form-group">
