@@ -1,3 +1,9 @@
+# Image Upscaler API 
+- POST route for users to submit an image
+- Pytorch ESGRAN to upscale image
+- returns base64 string of upscaled image
+
+
 ## Install & run locally
 
 Install:
@@ -25,6 +31,7 @@ pip install -r requirements.txt
 export variables
 ```
 export FLASK_APP=routes.py
+export APP_SETTINGS=./settings.cfg
 ```
 
 Run app 
