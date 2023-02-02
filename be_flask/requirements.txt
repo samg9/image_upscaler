@@ -26,5 +26,5 @@ six==1.14.0
 statsmodels==0.11.1
 torch==1.5.0
 torchvision==0.6.0
-Werkzeug==0.15.3
+Werkzeug==0.15.5
 WTForms==2.3.0
